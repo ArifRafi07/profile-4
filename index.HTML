@@ -1,56 +1,43 @@
-// Fungsi untuk load data dari localStorage
-function loadData() {
-  const data = JSON.parse(localStorage.getItem('dataTamu')) || [];
-  const tbody = document.querySelector('#tamu-table tbody');
-  tbody.innerHTML = '';
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Form Data Tamu (Simulasi LocalStorage)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Form Data Tamu</h1>
 
-  data.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${item.id}</td>
-      <td>${item.nama}</td>
-      <td>${item.instansi}</td>
-      <td>${item.keperluan}</td>
-      <td>${new Date(item.waktu).toLocaleString()}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+    <form id="form-tamu">
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama" name="nama" required />
 
-// Fungsi untuk simpan data ke localStorage
-function saveData(data) {
-  localStorage.setItem('dataTamu', JSON.stringify(data));
-}
+      <label for="instansi">Instansi:</label>
+      <input type="text" id="instansi" name="instansi" required />
 
-// Event form submit
-document.getElementById('form-tamu').addEventListener('submit', function(e) {
-  e.preventDefault();
+      <label for="keperluan">Keperluan:</label>
+      <input type="text" id="keperluan" name="keperluan" required />
 
-  const nama = e.target.nama.value.trim();
-  const instansi = e.target.instansi.value.trim();
-  const keperluan = e.target.keperluan.value.trim();
+      <button type="submit">Kirim</button>
+    </form>
 
-  if (!nama || !instansi || !keperluan) {
-    alert('Semua field harus diisi!');
-    return;
-  }
+    <h2>Data Tamu</h2>
+    <table id="tamu-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Instansi</th>
+          <th>Keperluan</th>
+          <th>Waktu</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-  const data = JSON.parse(localStorage.getItem('dataTamu')) || [];
-
-  const newEntry = {
-    id: Date.now(),
-    nama,
-    instansi,
-    keperluan,
-    waktu: new Date().toISOString()
-  };
-
-  data.push(newEntry);
-  saveData(data);
-
-  e.target.reset();
-  loadData();
-});
-
-// Load data saat pertama buka halaman
-loadData();
+  <script src="script.js"></script>
+</body>
+</html>
