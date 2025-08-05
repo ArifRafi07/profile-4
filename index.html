@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Tamu</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Buku Tamu</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Form Tamu</h1>
+  <h1>Form Buku Tamu</h1>
+
   <form id="formData">
     <input type="hidden" id="ID" />
-    <label>Nama:</label>
-    <input type="text" id="NAMA" required />
-    <label>Instansi:</label>
-    <input type="text" id="INSTANSI" required />
-    <label>Keperluan:</label>
-    <input type="text" id="KEPERLUAN" required />
-    <label>Waktu:</label>
-    <input type="datetime-local" id="WAKTU" required />
+    
+    <label for="NAMA">Nama:</label>
+    <input type="text" id="NAMA" required>
+
+    <label for="INSTANSI">Instansi:</label>
+    <input type="text" id="INSTANSI" required>
+
+    <label for="KEPERLUAN">Keperluan:</label>
+    <input type="text" id="KEPERLUAN" required>
+
+    <label for="WAKTU">Waktu:</label>
+    <input type="datetime-local" id="WAKTU" required>
+
     <button type="submit">Simpan</button>
   </form>
 
-  <h2>Daftar Tamu</h2>
+  <h2>Data Tamu</h2>
   <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>Nama</th>
-        <
+        <th>Instansi</th>
+        <th>Keperluan</th>
+        <th>Waktu</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
