@@ -4,10 +4,11 @@ document.getElementById("formData").addEventListener("submit", handleSubmit);
 
 function loadData() {
   fetch(API_URL)
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
       const tbody = document.getElementById("dataBody");
       tbody.innerHTML = "";
+
       data.forEach(row => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -23,11 +24,13 @@ function loadData() {
         `;
         tbody.appendChild(tr);
       });
-    });
+    })
+    .catch(error => console.error("Gagal mengambil data:", error));
 }
 
 function handleSubmit(e) {
   e.preventDefault();
+
   const ID = document.getElementById("ID").value;
   const data = {
     NAMA: document.getElementById("NAMA").value,
@@ -51,7 +54,8 @@ function handleSubmit(e) {
   .then(() => {
     document.getElementById("formData").reset();
     loadData();
-  });
+  })
+  .catch(error => console.error("Gagal menyimpan data:", error));
 }
 
 function editData(ID, NAMA, INSTANSI, KEPERLUAN, WAKTU) {
@@ -72,7 +76,8 @@ function deleteData(ID) {
       "Content-Type": "application/json"
     }
   })
-  .then(() => loadData());
+  .then(() => loadData())
+  .catch(error => console.error("Gagal menghapus data:", error));
 }
 
 window.onload = loadData;
