@@ -4,13 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const dataTableBody = document.querySelector('#dataTable tbody');
   const loadingData = document.getElementById('loadingData');
 
-  // Fungsi untuk mengambil dan menampilkan data
+  const API_URL = 'YOUR_APPS_SCRIPT_URL'; // <-- GANTI DENGAN URL API ANDA DI SINI
+
+  // Function to fetch and display data
   function fetchData() {
     loadingData.style.display = 'block';
-    fetch(location.href)
+    fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        dataTableBody.innerHTML = ''; // Kosongkan tabel
+        dataTableBody.innerHTML = ''; // Clear the table
         if (data.length > 0) {
           data.forEach(row => {
             const tr = document.createElement('tr');
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
-  // Panggil fungsi fetchData saat halaman dimuat
+  // Call fetchData when the page loads
   fetchData();
 
   // Handle form submission
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     statusMessage.innerHTML = 'Mengirim data...';
     statusMessage.classList.remove('green-text', 'red-text');
 
-    fetch(location.href, {
+    fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -63,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (result.status === 'success') {
         statusMessage.innerHTML = '✅ ' + result.message;
         statusMessage.classList.add('green-text');
-        form.reset(); // Reset form setelah berhasil
-        fetchData(); // Muat ulang data setelah data baru ditambahkan
+        form.reset(); // Reset form after successful submission
+        fetchData(); // Reload data after new data is added
       } else {
         statusMessage.innerHTML = '❌ ' + (result.message || 'Gagal menyimpan data.');
         statusMessage.classList.add('red-text');
