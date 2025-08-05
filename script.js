@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const dataTableBody = document.querySelector('#dataTable tbody');
   const loadingData = document.getElementById('loadingData');
 
-  const API_URL = 'YOUR_APPS_SCRIPT_URL'; // <-- GANTI DENGAN URL API ANDA DI SINI
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec'; // <-- GANTI DENGAN URL API ANDA DI SINI
 
   // Function to fetch and display data
   function fetchData() {
@@ -79,3 +79,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
