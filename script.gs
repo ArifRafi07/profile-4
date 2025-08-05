@@ -1,112 +1,70 @@
-// Fungsi READ (GET): getAll atau getOne?id=...
-function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  const headers = data[0];
-
-  if (e && e.parameter && e.parameter.action === 'getOne' && e.parameter.id) {
-    const id = e.parameter.id;
-    for (let i = 1; i < data.length; i++) {
-      if (data[i][0].toString() === id) {
-        let row = {};
-        for (let j = 0; j < headers.length; j++) {
-          row[headers[j]] = data[i][j];
-        }
-        return ContentService.createTextOutput(JSON.stringify(row))
-                             .setMimeType(ContentService.MimeType.JSON);
-      }
-    }
-    return ContentService.createTextOutput(JSON.stringify({ error: "Data tidak ditemukan" }))
-                         .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  // GET ALL
-  const output = [];
-  for (let i = 1; i < data.length; i++) {
-    let row = {};
-    for (let j = 0; j < headers.length; j++) {
-      row[headers[j]] = data[i][j];
-    }
-    output.push(row);
-  }
-
-  return ContentService.createTextOutput(JSON.stringify(output))
-                       .setMimeType(ContentService.MimeType.JSON);
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 20px;
 }
 
-// Fungsi CREATE (POST): Tambah data
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-
-  const id = new Date().getTime(); // ID unik berbasis waktu
-  const nama = data.nama || '';
-  const instansi = data.instansi || '';
-  const keperluan = data.keperluan || '';
-  const waktu = new Date(); // Waktu saat ini
-
-  sheet.appendRow([id, nama, instansi, keperluan, waktu]);
-
-  return ContentService.createTextOutput(JSON.stringify({
-    status: 'success',
-    message: 'Data berhasil ditambahkan',
-    id: id
-  })).setMimeType(ContentService.MimeType.JSON);
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-// Fungsi UPDATE (PUT): Perbarui data berdasarkan ID
-function doPut(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-
-  const id = data.id;
-  const nama = data.nama;
-  const instansi = data.instansi;
-  const keperluan = data.keperluan;
-  const waktu = new Date();
-
-  const rows = sheet.getDataRange().getValues();
-  for (let i = 1; i < rows.length; i++) {
-    if (rows[i][0].toString() === id.toString()) {
-      if (nama) sheet.getRange(i + 1, 2).setValue(nama);
-      if (instansi) sheet.getRange(i + 1, 3).setValue(instansi);
-      if (keperluan) sheet.getRange(i + 1, 4).setValue(keperluan);
-      sheet.getRange(i + 1, 5).setValue(waktu);
-
-      return ContentService.createTextOutput(JSON.stringify({
-        status: 'success',
-        message: 'Data berhasil diperbarui',
-        id: id
-      })).setMimeType(ContentService.MimeType.JSON);
-    }
-  }
-
-  return ContentService.createTextOutput(JSON.stringify({
-    status: 'error',
-    message: 'Data dengan ID tersebut tidak ditemukan'
-  })).setMimeType(ContentService.MimeType.JSON);
+h1, h2 {
+  text-align: center;
+  color: #333;
 }
 
-// Fungsi DELETE: Hapus data berdasarkan ID
-function doDelete(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-  const id = data.id;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
 
-  const rows = sheet.getDataRange().getValues();
-  for (let i = 1; i < rows.length; i++) {
-    if (rows[i][0].toString() === id.toString()) {
-      sheet.deleteRow(i + 1);
-      return ContentService.createTextOutput(JSON.stringify({
-        status: 'success',
-        message: 'Data berhasil dihapus',
-        id: id
-      })).setMimeType(ContentService.MimeType.JSON);
-    }
-  }
+label {
+  font-weight: bold;
+  color: #555;
+}
 
-  return ContentService.createTextOutput(JSON.stringify({
-    status: 'error',
-    message: 'Data dengan ID tersebut tidak ditemukan'
-  })).setMimeType(ContentService.MimeType.JSON);
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button {
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #007bff;
+  color: white;
 }
