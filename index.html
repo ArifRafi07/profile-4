@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Formulir Pendaftaran</title>
+  <title>Aplikasi Pendaftaran</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 
   <div class="container">
     <div class="card-panel z-depth-3">
-      <h4 class="center-align">Formulir Pendaftaran</h4>
+      <h4 class="center-align">Buku Tamu Digital</h4>
       <form id="dataForm">
         <div class="input-field">
           <i class="material-icons prefix">person</i>
@@ -36,9 +36,25 @@
       <div class="clearfix"></div>
       <div id="statusMessage" class="center-align"></div>
     </div>
-
-    <div class="center-align" style="margin-top: 20px;">
-        <a href="data.html" class="btn waves-effect waves-light">Lihat Data Tersimpan</a>
+    
+    <div class="card-panel z-depth-3" style="margin-top: 20px;">
+      <h4 class="center-align">Data yang Tersimpan</h4>
+      <div class="progress" id="loadingData">
+        <div class="indeterminate"></div>
+      </div>
+      <table id="dataTable" class="highlight responsive-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Instansi</th>
+            <th>Keperluan</th>
+            <th>Waktu</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
     </div>
 
   </div>
