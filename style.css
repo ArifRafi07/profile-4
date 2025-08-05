@@ -1,66 +1,65 @@
-// GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT-MU
-const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
-
-// Ambil data dari Sheet
-async function loadData() {
-  try {
-    const res = await fetch(GAS_URL);
-    const data = await res.json();
-
-    if (!data.length) {
-      document.getElementById('dataList').innerHTML = '<p>Belum ada data.</p>';
-      return;
-    }
-
-    let html = '<table><thead><tr><th>Nama</th><th>Instansi</th><th>Keperluan</th><th>Waktu</th></tr></thead><tbody>';
-    data.forEach(row => {
-      html += `<tr>
-        <td>${row.nama}</td>
-        <td>${row.instansi}</td>
-        <td>${row.keperluan}</td>
-        <td>${new Date(row.waktu).toLocaleString('id-ID')}</td>
-      </tr>`;
-    });
-    html += '</tbody></table>';
-    document.getElementById('dataList').innerHTML = html;
-  } catch (err) {
-    console.error(err);
-    document.getElementById('dataList').innerHTML = '<p>Gagal memuat data.</p>';
-  }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  padding: 20px;
 }
 
-// Kirim data ke Sheet
-document.getElementById('absenForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  const nama = document.getElementById('nama').value.trim();
-  const instansi = document.getElementById('instansi').value.trim();
-  const keperluan = document.getElementById('keperluan').value.trim();
+h1, h2 {
+  text-align: center;
+}
 
-  if (!nama || !instansi || !keperluan) {
-    alert('Harap isi semua data!');
-    return;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nama, instansi, keperluan })
-    });
+input {
+  padding: 10px;
+  font-size: 16px;
+}
 
-    const result = await res.json();
-    if (result.status === 'success') {
-      alert('Data berhasil disimpan!');
-      e.target.reset();
-      loadData();
-    } else {
-      alert('Gagal menyimpan data!');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Terjadi kesalahan saat mengirim data.');
-  }
-});
+button {
+  padding: 10px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
-window.onload = loadData;
+button:hover {
+  background-color: #005bb5;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+#status {
+  text-align: center;
+  margin-top: 10px;
+  color: green;
+  font-weight: bold;
+}
