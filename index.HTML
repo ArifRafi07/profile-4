@@ -1,41 +1,28 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Form Data Tamu (Simulasi LocalStorage)</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Absensi Tamu</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Form Data Tamu</h1>
-
-    <form id="form-tamu">
+    <h1>Form Absensi Tamu</h1>
+    <form id="absenForm">
       <label for="nama">Nama:</label>
-      <input type="text" id="nama" name="nama" required />
+      <input type="text" id="nama" required>
 
       <label for="instansi">Instansi:</label>
-      <input type="text" id="instansi" name="instansi" required />
+      <input type="text" id="instansi" required>
 
       <label for="keperluan">Keperluan:</label>
-      <input type="text" id="keperluan" name="keperluan" required />
+      <input type="text" id="keperluan" required>
 
       <button type="submit">Kirim</button>
     </form>
 
     <h2>Data Tamu</h2>
-    <table id="tamu-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nama</th>
-          <th>Instansi</th>
-          <th>Keperluan</th>
-          <th>Waktu</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div id="dataList">Memuat data...</div>
   </div>
 
   <script src="script.js"></script>
