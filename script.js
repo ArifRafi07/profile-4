@@ -1,36 +1,59 @@
-function doGet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  const headers = data[0];
-  const output = [];
+const scriptURL = 'https://script.google.com/macros/s/AKfyc.../exec'; // Ganti dengan URL Web App kamu
 
-  for (let i = 1; i < data.length; i++) {
-    let row = {};
-    for (let j = 0; j < headers.length; j++) {
-      row[headers[j]] = data[i][j];
+document.addEventListener("DOMContentLoaded", () => {
+  fetchData();
+
+  const form = document.getElementById("tamuForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      nama: formData.get("nama"),
+      instansi: formData.get("instansi"),
+      keperluan: formData.get("keperluan")
+    };
+
+    try {
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const result = await res.json();
+      alert(result.message);
+
+      form.reset();
+      fetchData();
+    } catch (error) {
+      alert("Gagal mengirim data!");
+      console.error("Error:", error);
     }
-    output.push(row);
+  });
+});
+
+async function fetchData() {
+  try {
+    const res = await fetch(scriptURL);
+    const data = await res.json();
+    const tbody = document.querySelector("#dataTamu tbody");
+
+    tbody.innerHTML = "";
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.nama}</td>
+        <td>${row.instansi}</td>
+        <td>${row.keperluan}</td>
+        <td>${new Date(row.waktu).toLocaleString("id-ID")}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } catch (error) {
+    console.error("Gagal memuat data:", error);
   }
-
-  return ContentService.createTextOutput(JSON.stringify(output))
-                       .setMimeType(ContentService.MimeType.JSON);
-}
-
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-
-  const id = new Date().getTime(); // ID unik
-  const nama = data.nama || '';
-  const instansi = data.instansi || '';
-  const keperluan = data.keperluan || '';
-  const waktu = new Date();
-
-  sheet.appendRow([id, nama, instansi, keperluan, waktu]);
-
-  return ContentService.createTextOutput(JSON.stringify({
-    status: 'success',
-    message: 'Data berhasil disimpan',
-    id: id
-  })).setMimeType(ContentService.MimeType.JSON);
 }
