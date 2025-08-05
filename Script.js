@@ -4,25 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const dataTableBody = document.querySelector('#dataTable tbody');
   const loadingData = document.getElementById('loadingData');
 
-  const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec'; // <-- GANTI DENGAN URL API ANDA DI SINI
+  // Ganti URL ini dengan URL API Anda
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec';
 
-  // Function to fetch and display data
   function fetchData() {
     loadingData.style.display = 'block';
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        dataTableBody.innerHTML = ''; // Clear the table
-        if (data.length > 0) {
-          data.forEach(row => {
+        dataTableBody.innerHTML = '';
+        if (data && data.length > 1) {
+          const headers = data[0]; // Ambil baris pertama sebagai header
+          const tableData = data.slice(1); // Ambil data mulai dari baris kedua
+
+          tableData.forEach(row => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${row.ID}</td>
-              <td>${row.Nama}</td>
-              <td>${row.Instansi}</td>
-              <td>${row.Keperluan}</td>
-              <td>${row.Waktu}</td>
-            `;
+            headers.forEach((header, index) => {
+              const td = document.createElement('td');
+              td.textContent = row[index] || ''; // Tampilkan data per kolom
+              tr.appendChild(td);
+            });
             dataTableBody.appendChild(tr);
           });
         } else {
@@ -37,13 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
-  // Call fetchData when the page loads
   fetchData();
 
-  // Handle form submission
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-
     const data = {
       nama: document.getElementById('nama').value,
       instansi: document.getElementById('instansi').value,
@@ -65,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (result.status === 'success') {
         statusMessage.innerHTML = '✅ ' + result.message;
         statusMessage.classList.add('green-text');
-        form.reset(); // Reset form after successful submission
-        fetchData(); // Reload data after new data is added
+        form.reset();
+        fetchData();
       } else {
         statusMessage.innerHTML = '❌ ' + (result.message || 'Gagal menyimpan data.');
         statusMessage.classList.add('red-text');
@@ -79,5 +77,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-
-
