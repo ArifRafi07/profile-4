@@ -1,59 +1,79 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfyc.../exec'; // Ganti dengan URL Web App kamu
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('dataForm');
+  const statusMessage = document.getElementById('statusMessage');
+  const dataTableBody = document.querySelector('#dataTable tbody');
+  const loadingData = document.getElementById('loadingData');
 
-document.addEventListener("DOMContentLoaded", () => {
+  // Fungsi untuk mengambil dan menampilkan data
+  function fetchData() {
+    loadingData.style.display = 'block';
+    fetch(location.href)
+      .then(response => response.json())
+      .then(data => {
+        dataTableBody.innerHTML = ''; // Kosongkan tabel
+        if (data.length > 0) {
+          data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${row.ID}</td>
+              <td>${row.Nama}</td>
+              <td>${row.Instansi}</td>
+              <td>${row.Keperluan}</td>
+              <td>${row.Waktu}</td>
+            `;
+            dataTableBody.appendChild(tr);
+          });
+        } else {
+          dataTableBody.innerHTML = '<tr><td colspan="5" class="center-align">Belum ada data.</td></tr>';
+        }
+        loadingData.style.display = 'none';
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        loadingData.style.display = 'none';
+        dataTableBody.innerHTML = '<tr><td colspan="5" class="center-align red-text">Gagal memuat data.</td></tr>';
+      });
+  }
+
+  // Panggil fungsi fetchData saat halaman dimuat
   fetchData();
 
-  const form = document.getElementById("tamuForm");
-  form.addEventListener("submit", async (e) => {
+  // Handle form submission
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const formData = new FormData(form);
     const data = {
-      nama: formData.get("nama"),
-      instansi: formData.get("instansi"),
-      keperluan: formData.get("keperluan")
+      nama: document.getElementById('nama').value,
+      instansi: document.getElementById('instansi').value,
+      keperluan: document.getElementById('keperluan').value
     };
 
-    try {
-      const res = await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+    statusMessage.innerHTML = 'Mengirim data...';
+    statusMessage.classList.remove('green-text', 'red-text');
 
-      const result = await res.json();
-      alert(result.message);
-
-      form.reset();
-      fetchData();
-    } catch (error) {
-      alert("Gagal mengirim data!");
-      console.error("Error:", error);
-    }
+    fetch(location.href, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === 'success') {
+        statusMessage.innerHTML = '✅ ' + result.message;
+        statusMessage.classList.add('green-text');
+        form.reset(); // Reset form setelah berhasil
+        fetchData(); // Muat ulang data setelah data baru ditambahkan
+      } else {
+        statusMessage.innerHTML = '❌ ' + (result.message || 'Gagal menyimpan data.');
+        statusMessage.classList.add('red-text');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      statusMessage.innerHTML = '❌ Terjadi kesalahan. Periksa koneksi Anda.';
+      statusMessage.classList.add('red-text');
+    });
   });
 });
-
-async function fetchData() {
-  try {
-    const res = await fetch(scriptURL);
-    const data = await res.json();
-    const tbody = document.querySelector("#dataTamu tbody");
-
-    tbody.innerHTML = "";
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${row.id}</td>
-        <td>${row.nama}</td>
-        <td>${row.instansi}</td>
-        <td>${row.keperluan}</td>
-        <td>${new Date(row.waktu).toLocaleString("id-ID")}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  } catch (error) {
-    console.error("Gagal memuat data:", error);
-  }
-}
