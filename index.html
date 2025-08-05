@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data Google Sheets</title>
+  <title>Data Tamu</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Daftar Data</h1>
+  <h1>Daftar Tamu</h1>
+
   <table>
     <thead>
-      <tr><th>ID</th><th>NAMA</th><th>INSTANSI</th><th>KEPERLUAN</th><th>WAKTU</th></tr>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Instansi</th>
+        <th>Keperluan</th>
+        <th>Waktu</th>
+      </tr>
     </thead>
     <tbody id="dataBody">
-      <tr><td colspan="5">Loading data…</td></tr>
+      <tr><td colspan="5">Memuat data...</td></tr>
     </tbody>
   </table>
 
+  <!-- Tabletop.js untuk ambil data dari Google Sheets -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
   <script src="script.js"></script>
 </body>
