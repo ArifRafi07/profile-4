@@ -1,70 +1,66 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  padding: 20px;
+// GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT-MU
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+// Ambil data dari Sheet
+async function loadData() {
+  try {
+    const res = await fetch(GAS_URL);
+    const data = await res.json();
+
+    if (!data.length) {
+      document.getElementById('dataList').innerHTML = '<p>Belum ada data.</p>';
+      return;
+    }
+
+    let html = '<table><thead><tr><th>Nama</th><th>Instansi</th><th>Keperluan</th><th>Waktu</th></tr></thead><tbody>';
+    data.forEach(row => {
+      html += `<tr>
+        <td>${row.nama}</td>
+        <td>${row.instansi}</td>
+        <td>${row.keperluan}</td>
+        <td>${new Date(row.waktu).toLocaleString('id-ID')}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById('dataList').innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    document.getElementById('dataList').innerHTML = '<p>Gagal memuat data.</p>';
+  }
 }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+// Kirim data ke Sheet
+document.getElementById('absenForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-h1, h2 {
-  text-align: center;
-  color: #333;
-}
+  const nama = document.getElementById('nama').value.trim();
+  const instansi = document.getElementById('instansi').value.trim();
+  const keperluan = document.getElementById('keperluan').value.trim();
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
-}
+  if (!nama || !instansi || !keperluan) {
+    alert('Harap isi semua data!');
+    return;
+  }
 
-label {
-  font-weight: bold;
-  color: #555;
-}
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nama, instansi, keperluan })
+    });
 
-input[type="text"] {
-  padding: 8px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  font-size: 14px;
-}
+    const result = await res.json();
+    if (result.status === 'success') {
+      alert('Data berhasil disimpan!');
+      e.target.reset();
+      loadData();
+    } else {
+      alert('Gagal menyimpan data!');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Terjadi kesalahan saat mengirim data.');
+  }
+});
 
-button {
-  padding: 10px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background: #007bff;
-  color: white;
-}
+window.onload = loadData;
