@@ -1,16 +1,18 @@
-const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Wb0862TiSBnUfWjWG-j3RJ77eOTSZrZadLjYxic1pnw/pubhtml';
+// Gunakan spreadsheet yang sudah kamu share
+const publicSpreadsheetURL = 'https://docs.google.com/spreadsheets/d/1Wb0862TiSBnUfWjWG-j3RJ77eOTSZrZadLjYxic1pnw/pubhtml';
 
-function showInfo(data, tabletop) {
-  const tbody = document.getElementById('dataBody');
-  tbody.innerHTML = '';
-  data.forEach(item => {
-    const tr = document.createElement('tr');
+function showData(data) {
+  const tbody = document.getElementById("dataBody");
+  tbody.innerHTML = "";
+
+  data.forEach(row => {
+    const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${item.ID || ''}</td>
-      <td>${item.NAMA || ''}</td>
-      <td>${item.INSTANSI || ''}</td>
-      <td>${item.KEPERLUAN || ''}</td>
-      <td>${item.WAKTU || ''}</td>
+      <td>${row.ID || ''}</td>
+      <td>${row.NAMA || ''}</td>
+      <td>${row.INSTANSI || ''}</td>
+      <td>${row.KEPERLUAN || ''}</td>
+      <td>${row.WAKTU || ''}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -18,8 +20,8 @@ function showInfo(data, tabletop) {
 
 window.addEventListener('DOMContentLoaded', () => {
   Tabletop.init({
-    key: publicSpreadsheetUrl,
-    callback: showInfo,
+    key: publicSpreadsheetURL,
+    callback: showData,
     simpleSheet: true
   });
 });
