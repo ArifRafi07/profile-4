@@ -1,20 +1,22 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f3f3f3;
-  padding: 20px;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-  max-width: 700px;
-  margin: auto;
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 h1, h2 {
   text-align: center;
+  color: #333;
 }
 
 form {
@@ -23,43 +25,30 @@ form {
   gap: 10px;
 }
 
-input {
+input, button {
   padding: 10px;
   font-size: 16px;
 }
 
 button {
-  padding: 10px;
-  background-color: #0066cc;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #005bb5;
+  background-color: #45a049;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 20px;
-}
-
-table, th, td {
-  border: 1px solid #ccc;
+  border-collapse: collapse;
 }
 
 th, td {
-  padding: 8px;
+  padding: 10px;
   text-align: left;
-}
-
-#status {
-  text-align: center;
-  margin-top: 10px;
-  color: green;
-  font-weight: bold;
+  border-bottom: 1px solid #ccc;
 }
