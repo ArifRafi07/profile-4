@@ -2,46 +2,22 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Buku Tamu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Google Sheets</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Form Buku Tamu</h1>
-
-  <form id="formData">
-    <input type="hidden" id="ID" />
-    
-    <label for="NAMA">Nama:</label>
-    <input type="text" id="NAMA" required>
-
-    <label for="INSTANSI">Instansi:</label>
-    <input type="text" id="INSTANSI" required>
-
-    <label for="KEPERLUAN">Keperluan:</label>
-    <input type="text" id="KEPERLUAN" required>
-
-    <label for="WAKTU">Waktu:</label>
-    <input type="datetime-local" id="WAKTU" required>
-
-    <button type="submit">Simpan</button>
-  </form>
-
-  <h2>Data Tamu</h2>
+  <h1>Daftar Data</h1>
   <table>
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nama</th>
-        <th>Instansi</th>
-        <th>Keperluan</th>
-        <th>Waktu</th>
-        <th>Aksi</th>
-      </tr>
+      <tr><th>ID</th><th>NAMA</th><th>INSTANSI</th><th>KEPERLUAN</th><th>WAKTU</th></tr>
     </thead>
-    <tbody id="dataBody"></tbody>
+    <tbody id="dataBody">
+      <tr><td colspan="5">Loading data…</td></tr>
+    </tbody>
   </table>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
