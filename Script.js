@@ -1,83 +1,25 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec';
+const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Wb0862TiSBnUfWjWG-j3RJ77eOTSZrZadLjYxic1pnw/pubhtml';
 
-document.getElementById("formData").addEventListener("submit", handleSubmit);
-
-function loadData() {
-  fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
-      const tbody = document.getElementById("dataBody");
-      tbody.innerHTML = "";
-
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row.ID}</td>
-          <td>${row.NAMA}</td>
-          <td>${row.INSTANSI}</td>
-          <td>${row.KEPERLUAN}</td>
-          <td>${row.WAKTU}</td>
-          <td>
-            <button onclick="editData('${row.ID}', '${row.NAMA}', '${row.INSTANSI}', '${row.KEPERLUAN}', '${row.WAKTU}')">Edit</button>
-            <button onclick="deleteData('${row.ID}')">Hapus</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(error => console.error("Gagal mengambil data:", error));
+function showInfo(data, tabletop) {
+  const tbody = document.getElementById('dataBody');
+  tbody.innerHTML = '';
+  data.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.ID || ''}</td>
+      <td>${item.NAMA || ''}</td>
+      <td>${item.INSTANSI || ''}</td>
+      <td>${item.KEPERLUAN || ''}</td>
+      <td>${item.WAKTU || ''}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-function handleSubmit(e) {
-  e.preventDefault();
-
-  const ID = document.getElementById("ID").value;
-  const data = {
-    NAMA: document.getElementById("NAMA").value,
-    INSTANSI: document.getElementById("INSTANSI").value,
-    KEPERLUAN: document.getElementById("KEPERLUAN").value,
-    WAKTU: document.getElementById("WAKTU").value,
-  };
-
-  if (ID) {
-    data.method = "PUT";
-    data.ID = ID;
-  }
-
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(() => {
-    document.getElementById("formData").reset();
-    loadData();
-  })
-  .catch(error => console.error("Gagal menyimpan data:", error));
-}
-
-function editData(ID, NAMA, INSTANSI, KEPERLUAN, WAKTU) {
-  document.getElementById("ID").value = ID;
-  document.getElementById("NAMA").value = NAMA;
-  document.getElementById("INSTANSI").value = INSTANSI;
-  document.getElementById("KEPERLUAN").value = KEPERLUAN;
-  document.getElementById("WAKTU").value = WAKTU;
-}
-
-function deleteData(ID) {
-  if (!confirm("Yakin ingin menghapus data ini?")) return;
-
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({ method: "DELETE", ID }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(() => loadData())
-  .catch(error => console.error("Gagal menghapus data:", error));
-}
-
-window.onload = loadData;
+window.addEventListener('DOMContentLoaded', () => {
+  Tabletop.init({
+    key: publicSpreadsheetUrl,
+    callback: showInfo,
+    simpleSheet: true
+  });
+});
