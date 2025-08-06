@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const dataTableBody = document.querySelector('#dataTable tbody');
   const loadingData = document.getElementById('loadingData');
 
-  // Ganti URL ini dengan URL API Anda
+  // URL API milik kamu
   const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec';
 
   function fetchData() {
@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(data => {
         dataTableBody.innerHTML = '';
         if (data && data.length > 1) {
-          const headers = data[0]; // Ambil baris pertama sebagai header
-          const tableData = data.slice(1); // Ambil data mulai dari baris kedua
+          const headers = data[0]; // Header
+          const tableData = data.slice(1); // Data
 
           tableData.forEach(row => {
             const tr = document.createElement('tr');
             headers.forEach((header, index) => {
               const td = document.createElement('td');
-              td.textContent = row[index] || ''; // Tampilkan data per kolom
+              td.textContent = row[index] || '';
               tr.appendChild(td);
             });
             dataTableBody.appendChild(tr);
@@ -76,4 +76,4 @@ document.addEventListener('DOMContentLoaded', function() {
       statusMessage.classList.add('red-text');
     });
   });
-});\
+});
