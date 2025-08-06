@@ -1,31 +1,66 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data Tamu</title>
+  <title>Aplikasi Pendaftaran</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Daftar Tamu</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nama</th>
-        <th>Instansi</th>
-        <th>Keperluan</th>
-        <th>Waktu</th>
-      </tr>
-    </thead>
-    <tbody id="dataBody">
-      <tr><td colspan="5">Memuat data...</td></tr>
-    </tbody>
-  </table>
+  <div class="container">
+    <div class="card-panel z-depth-3">
+      <h4 class="center-align">Buku Tamu Digital</h4>
+      <form id="dataForm">
+        <div class="input-field">
+          <i class="material-icons prefix">person</i>
+          <input id="nama" type="text" class="validate" required>
+          <label for="nama">Nama</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix">business</i>
+          <input id="instansi" type="text" class="validate" required>
+          <label for="instansi">Instansi</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix">description</i>
+          <input id="keperluan" type="text" class="validate" required>
+          <label for="keperluan">Keperluan</label>
+        </div>
+        <button class="btn waves-effect waves-light right" type="submit">Kirim
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+      
+      <div class="clearfix"></div>
+      <div id="statusMessage" class="center-align"></div>
+    </div>
+    
+    <div class="card-panel z-depth-3" style="margin-top: 20px;">
+      <h4 class="center-align">Data yang Tersimpan</h4>
+      <div class="progress" id="loadingData">
+        <div class="indeterminate"></div>
+      </div>
+      <table id="dataTable" class="highlight responsive-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Instansi</th>
+            <th>Keperluan</th>
+            <th>Waktu</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Tabletop.js untuk ambil data dari Google Sheets -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>
