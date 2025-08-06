@@ -3,50 +3,63 @@ body {
   font-family: 'Roboto', sans-serif;
   padding-top: 40px;
 }
+
 .container {
   max-width: 900px;
 }
+
 .card-panel {
   padding: 30px;
 }
+
 h4 {
   margin-top: 0;
   margin-bottom: 20px;
   font-weight: 700;
   color: #333;
 }
+
 .input-field label {
   color: #9e9e9e;
 }
+
 .input-field input:focus + label {
   color: #26a69a !important;
 }
+
 .input-field input:focus {
   border-bottom: 1px solid #26a69a !important;
   box-shadow: 0 1px 0 0 #26a69a !important;
 }
+
 .btn {
   background-color: #26a69a !important;
 }
+
 .btn:hover {
   background-color: #00897b !important;
 }
+
 .clearfix {
   clear: both;
 }
+
 #statusMessage {
   margin-top: 20px;
   font-weight: bold;
 }
+
 #dataTable th {
   background-color: #26a69a;
   color: white;
 }
+
 .progress {
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: #e0e0e0;
 }
+
 .indeterminate {
   background-color: #26a69a;
 }
