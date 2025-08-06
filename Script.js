@@ -76,3 +76,4 @@ function deleteData(ID) {
 }
 
 window.onload = loadData;
+
