@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Tamu</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>CRUD Sederhana</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Formulir Tamu</h1>
-    <form id="dataForm">
-      <label for="id">ID:</label>
-      <input type="text" id="id" name="id" required />
+  <h1>Formulir Tamu</h1>
 
-      <label for="nama">Nama:</label>
-      <input type="text" id="nama" name="nama" required />
+  <form id="formData">
+    <input type="hidden" id="ID">
+    <input type="text" id="NAMA" placeholder="Nama" required>
+    <input type="text" id="INSTANSI" placeholder="Instansi" required>
+    <input type="text" id="KEPERLUAN" placeholder="Keperluan" required>
+    <input type="datetime-local" id="WAKTU" required>
+    <button type="submit">Simpan</button>
+  </form>
 
-      <label for="instansi">Instansi:</label>
-      <input type="text" id="instansi" name="instansi" required />
-
-      <label for="keperluan">Keperluan:</label>
-      <input type="text" id="keperluan" name="keperluan" required />
-
-      <label for="waktu">Waktu:</label>
-      <input type="datetime-local" id="waktu" name="waktu" required />
-
-      <button type="submit">Kirim</button>
-    </form>
-    <p id="statusMessage"></p>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Instansi</th>
+        <th>Keperluan</th>
+        <th>Waktu</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody"></tbody>
+  </table>
 
   <script src="script.js"></script>
 </body>
