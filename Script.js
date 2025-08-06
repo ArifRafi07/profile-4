@@ -19,21 +19,21 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-          statusMessage.textContent = "Data berhasil dikirim!";
+          statusMessage.textContent = "✅ Data berhasil dikirim!";
           form.reset();
         } else {
-          statusMessage.textContent = "Gagal mengirim data.";
+          statusMessage.textContent = "❌ Gagal mengirim data.";
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        statusMessage.textContent = "Terjadi kesalahan saat mengirim data.";
+        statusMessage.textContent = "⚠️ Terjadi kesalahan saat mengirim data.";
       });
   });
 });
