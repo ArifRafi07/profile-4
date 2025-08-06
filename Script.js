@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbzFEybNFT5R061-UIVtoqpy-M0hKUN7Op-HBAAKbDemKeLK4f2uksOjUgFGhXUXyTeH/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwRDKrHRfZSa5R3JqCiAEbKpnd-X8D7ERORMC7AKNI3Qi4Q5R4MxEuvpsQoLjtSM9ja/exec';
 
 document.getElementById("formData").addEventListener("submit", handleSubmit);
 
@@ -76,4 +76,5 @@ function deleteData(ID) {
 }
 
 window.onload = loadData;
+
 
